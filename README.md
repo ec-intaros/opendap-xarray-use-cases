@@ -58,14 +58,30 @@ The variables that are available for each platform are extracted and printed out
 * **CNDC**: Sea Water Electrical Conductivity
 
 ### Filter Data
+This section allows filtering one or more variables for each platform, and DEPTH range, to the data that was previously filtered in the Filtered Position section.
+
+The following are the four types of filters that are given as examples: 
 * Filtered data by BBOX and One Variable
 * Filtered data by BBOX (All Variables)
 * Filtered data by BBOX and One Variable, within a DEPTH range
 * Filtered data by BBOX (All Variables), within a DEPTH range
 
+The output of all filters is a *filtered_xarr* xarray dataset, containing one or all the variables within the specified DEPTH range, of those positions that have been previously filtered (eg by "BBOX", by "BBOX and Month", or by "BBOX and Hour"). 
+
 ### Reference Plots
+The reference plots are generated for the available variables of the filtered xarrays. On the y-axis is shown the TIME of the measurement (in float format, which needs to be converted to datetime format), and on the x-axis is the DEPTH of the measurement. 
+
+This notebook shows how to generate two types of plots:
 * Plotting individual Variables per individual Platform
 * Plotting individual Variables across aggregated Platforms
+
+The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Filtered Data section.
+
+The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data for a specific variable, across all platforms. To do so, the dimensions of the DEPTH of the variables of all platforms must be the equal, otherwise it is not possible to combine them into a new, aggregated, xarray. Two options are provided to accomplish this:
+* Aggregate with minimum DEPTH, i.e. use minimum common DEPTH across all platforms' DEPTHs
+* Aggregate with maximum DEPTH, i.e. use maximum DEPTH across all platforms' DEPTHs, and fill empty values with nans
+
+
 
 
 
