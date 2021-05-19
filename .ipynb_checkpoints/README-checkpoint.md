@@ -5,6 +5,13 @@ This Notebook provides an overview, as well as practical examples, to access and
 The main steps for executing the Notebook are described below. 
 
 ## Set-up
+The first step is to define the url of the server to use. Two options are provided, one for HYRAX and one for THREDDS:
+* hyrax: https://opendap.terradue.com/hyrax/data/subset_2003/
+* thredds: https://opendap.terradue.com/thredds/dodsC/subset_2003/
+
+Subsequently, the *year* and the *platform codes* are defined. This information is needed, and needs to be known a priori, as it allows comleting the url to access each specific NetCDF file. The naming convention of the NetCDF files is:
+```58<platform_code>_CTD_<year>.nc.nc4```
+For example, for the platform 'GT' and year 2003, the name of the NetCDF file is: 58GT_CTD_2003.nc.nc4.
 
 ## Retrieval of DDS information
 
