@@ -75,11 +75,15 @@ This notebook shows how to generate two types of plots:
 * Plotting individual Variables per individual Platform
 * Plotting individual Variables across aggregated Platforms
 
-The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Filtered Data section.
+The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Filtered Data section. The example plot below represents the Sea Water Practical Salinity (PSAL) between 50 and 100 meters below sea level, for the platform GT.
+![image](./images/GT_PSAL.png)
 
 The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data for a specific variable, across all platforms. To do so, the dimensions of the DEPTH of the variables of all platforms must be the equal, otherwise it is not possible to combine them into a new, aggregated, xarray. Two options are provided to accomplish this:
 * Aggregate with minimum DEPTH, i.e. use minimum common DEPTH across all platforms' DEPTHs
 * Aggregate with maximum DEPTH, i.e. use maximum DEPTH across all platforms' DEPTHs, and fill empty values with nans
+
+The example plots below represent the four variables aggregated among the available platforms, between 0 and 100 meters below sea level.
+![image](./images/aggregated_platforms.png)
 
 
 
