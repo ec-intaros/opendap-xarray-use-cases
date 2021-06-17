@@ -1,7 +1,4 @@
-# This is a test
-
-
-## Subset 2003 Analysis with Xarray
+# Subset 2003 Analysis with Xarray
 
 This Notebook provides an overview, as well as practical examples, to access and analyse a subset of NetCDF data from available campaigns collected in the year 2003. This subset of data has been prepared and uploaded on the Hyrax server (https://opendap.terradue.com/hyrax/data/subset_2003/), where it can be accessed directly.
 
