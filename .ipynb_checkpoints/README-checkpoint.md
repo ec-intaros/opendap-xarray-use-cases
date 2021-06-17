@@ -2,14 +2,14 @@
 
 In this repository there are two notebooks for accessing, querying, analysing and visualising NetCDF data. The notebooks are explained in this document as separate sections. 
 
-* **Reference Notebook - Subset 2003 Analysis with Xarray**: 
-* **DAP Notebook - Extraction with Queries**: 
+* 1) **Reference Notebook - Subset 2003 Analysis with Xarray**: 
+* 2) **DAP Notebook - Extraction with Queries**: 
 
 
 
 
 
-## Subset 2003 Analysis with Xarray
+## 1) Reference Notebook - Subset 2003 Analysis with Xarray
 
 This Notebook provides an overview, as well as practical examples, to access and analyse a subset of NetCDF data from available campaigns collected in the year 2003. This subset of data has been prepared and uploaded on the Hyrax server (https://opendap.terradue.com/hyrax/data/subset_2003/), where it can be accessed directly.
 
@@ -97,7 +97,4 @@ The example plots below represent the four variables aggregated among the availa
 ![image](./images/aggregated_platforms.png)
 
 
-
-
-
-
+## 2) DAP Notebook - Extraction with Queries
