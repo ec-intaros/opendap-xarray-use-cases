@@ -155,10 +155,9 @@ This notebook shows how to generate two types of plots:
 * Plotting individual Variables across aggregated Platforms
 
 The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Filtered Data section. The example plots below represent the Sea Water Temperature (TEMP) and Pressure (PRES) respectively, between 200 and 280 meters below sea level, for the platform AA.
-![image](./images/Plotting Variables per individual Platform.png)
+![image](./images/Plotting_Variables_per_individual_Platform.png)
 
 The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data for individual variable(s), across available platforms. To do so, the **Filtered data by BBOX (All Variables)** section must have been executed, so that the correct *filtered_arr* array is used. 
 
 The example plots below represent the two variables TEMP and PRES aggregated among the available platforms, between 200 and 280 meters below sea level.
-![image](./images/GT_PSAL.png)
-<!-- ![image](./images/Plotting aggregate results.png) -->
+![image](./images/Plotting_aggregate_results.png)
