@@ -160,4 +160,5 @@ The first plot is more straightforward, as it automatically generates plot(s) of
 The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data for individual variable(s), across available platforms. To do so, the **Filtered data by BBOX (All Variables)** section must have been executed, so that the correct *filtered_arr* array is used. 
 
 The example plots below represent the two variables TEMP and PRES aggregated among the available platforms, between 200 and 280 meters below sea level.
-![image](./images/Plotting aggregate results.png)
+![image](./images/GT_PSAL.png)
+<!-- ![image](./images/Plotting aggregate results.png) -->
