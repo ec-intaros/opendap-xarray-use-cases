@@ -5,6 +5,7 @@ In this repository there are two notebooks for accessing, querying, analysing an
 * 1) **Reference Notebook - Subset 2003 Analysis with Xarray**: 
 * 2) **DAP Notebook - Extraction with Queries**: 
 
+[click on this link](## 2) DAP Notebook - Extraction with Queries)
 
 
 
