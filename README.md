@@ -5,7 +5,7 @@ In this repository there are two notebooks for accessing, querying, analysing an
 * 1) **Reference Notebook - Subset 2003 Analysis with Xarray**: 
 * 2) **DAP Notebook - Extraction with Queries**: 
 
-[click on this link](## 2) DAP Notebook - Extraction with Queries)
+[click on this link](#test)
 
 
 
@@ -98,4 +98,4 @@ The example plots below represent the four variables aggregated among the availa
 ![image](./images/aggregated_platforms.png)
 
 
-## 2) DAP Notebook - Extraction with Queries
+## 2) DAP Notebook - Extraction with Queries {#test}
