@@ -3,8 +3,8 @@
 In this repository there are two notebooks for accessing, querying, analysing and visualising NetCDF data. The notebooks are explained in this document as separate sections, and can be executed in parallel. 
 
 The two notebooks are:
-* 1) **Test1 REF - OPeNDAP Xarray use cases**: a reference notebook for the download of a full data bulk, and ingesting it in a data structure in memory: this structure can be further filtered to extract data chunks, using Python functions, that are plotted for data visualisation;
-* 2) **Test1 DAP - OPeNDAP Xarray use cases**: a Data Access Protocol (DAP) notebook for experimenting OPeNDAP query filters, for the download of directly optimized data chunks: these data chunks are then plotted for data visualisation.
+1) **Test1 REF - OPeNDAP Xarray use cases**: a reference notebook for the download of a full data bulk, and ingesting it in a data structure in memory: this structure can be further filtered to extract data chunks, using Python functions, that are plotted for data visualisation;
+2) **Test1 DAP - OPeNDAP Xarray use cases**: a Data Access Protocol (DAP) notebook for experimenting OPeNDAP query filters, for the download of directly optimized data chunks: these data chunks are then plotted for data visualisation.
 
 Both the REF and DAP Notebooks follow the same approach: 
 * Set-up
@@ -12,10 +12,10 @@ Both the REF and DAP Notebooks follow the same approach:
 * Load and Plot all needed CTD Data (from Variables and Attributes)
 
 In each notebook, two case studies are described to visualise different data ranges: 
-* extraction of data between the first elements of DEPTH, eg 0-20;
-* extraction of data between the last elements of DEPTH, eg 50-last.
+* extraction of data between the first elements of DEPTH, eg **0-20**;
+* extraction of data between the last elements of DEPTH, eg **50-last**.
 
-Application developers are supported to compare the 2 ways to querying data (Bulk and Optimized) in order to learn how to exploit efficiently (and without mistake) all the OPeNDAP server-side capabilities for data filtering and rerieval.
+Application developers are supported to compare the two ways to querying data (Bulk and Optimized) in order to learn how to exploit efficiently (and without mistake) all the OPeNDAP server-side capabilities for data filtering and rerieval.
 
 
 # 1) **Test1 REF - OPeNDAP Xarray use cases**
