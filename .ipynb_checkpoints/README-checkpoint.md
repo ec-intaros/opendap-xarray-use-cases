@@ -120,38 +120,21 @@ The example plots below represent the four variables aggregated among the availa
 ![image](./images/ref_0-20_aggregated.png)
 
 ### Range 50-last Test
-This section follows the same structure as the 0-20 range section, but focuses on data extracted from the 50 meters onwards of DEPTH.
+This section follows the same structure as the REF 0-20 range section, but focuses on data extracted from the 50 meters onwards of DEPTH.
 
-Plot for Sea Water Temperature and Pressure between 50-2956 meters for the selected locations of the platform GT.
+* Plots for Sea Water Temperature and Pressure respectively, between 50-2956 meters for the selected locations of the platform GT.
 ![image](./images/ref_50-last_individual.png)
-
-Plot for Sea Water Temperature and Pressure between 50-2956 meters for the aggregated platforms.
+* Plots for Sea Water Temperature and Pressure respectively, between 50-2956 meters for the aggregated platforms.
 ![image](./images/ref_50-last_aggregated.png)
 
 
+# 2) **Test1 DAP - OPeNDAP Xarray use cases** 
+This Notebook provides a practical example to access and analyse **only a selection** of a NetCDF dataset that was presented in section *1) Test1 REF - OPeNDAP Xarray use cases*, to minimixe data volume requirements.
 
-## 2) **Test1 DAP - OPeNDAP Xarray use cases** 
-This Notebook provides a practical example to access and analyse **only a selection** of a NetCDF dataset that was presented in section *1) Reference Notebook - Subset 2003 Analysis with Xarray*, to minimixe data volume requirements.
+## Exploratory Data Analysis
+This is the same as the *Exploratory Data Analysis* section in the REF Notebook. 
 
-### Set-up
-same as relevant section in ## 1) Reference Notebook - Subset 2003 Analysis with Xarray
-
-### Retrieval of DDS information
-same as relevant section in ## 1) Reference Notebook - Subset 2003 Analysis with Xarray
-
-### Visual Analysis: Load and Plot Positions only
-same as relevant section in ## 1) Reference Notebook - Subset 2003 Analysis with Xarray
-
-#### Create Position Dictionary and Dataframe 
-same as relevant section in ## 1) Reference Notebook - Subset 2003 Analysis with Xarray
-
-#### Plot Positions 
-same as relevant section in ## 1) Reference Notebook - Subset 2003 Analysis with Xarray
-
-#### Filter Positions
-same as relevant section in ## 1) Reference Notebook - Subset 2003 Analysis with Xarray
-
-### Processing: Load and Plot selected Data (Variables within DEPTH range)
+## Data Processing: Load and Plot selected Data (Variables within DEPTH range)
 This section enables accessing data of **only selected variables** and **within a specified DEPTH range**, to avoid fetching unnecessary data and minimise data volume.
 
 The selected variables of interest need to be specified in the *var_list*. The four variables that are available in this dataset are: 
@@ -160,40 +143,39 @@ The selected variables of interest need to be specified in the *var_list*. The f
 * **PSAL**: Sea Water Practical Salinity
 * **CNDC**: Sea Water Electrical Conductivity 
 
-The depth range must also be defined. For some limitations to the DAP syntax, at least one boundary needs to correspond to one of the two extremes, ie ```[2:1:4]``` does NOT work, but ```[0:1:4]``` or ```[4:1:last]``` work.
+The DEPTH range must also be defined in this case, as data is fetched with the specific DEPTH range directly from url. For some limitations to the DAP syntax, at least one range boundary needs to correspond to one of the two extremes. For example, in a data array of 100 elements starting from 0 to 99, the following scenarios are possible:
+* select the first 20 elements, corresponding to the values range 0 - 19 --> ```[first:1:intermediate] (eg [0:1:19])``` work
+* select the last 20 elements, corresponsing to the values range 80 - 99 --> ```[intermediate:1:last] (eg [80:1:99])``` work
+* select the intermediate 60-80 elements, corresponsing to the values range 60 - 79 --> ```[intermediate_1:1:intermediate_2] (eg [80:1:89])``` does NOT work
+
+### Range 0-20 Test
 
 #### Create Data Dictionary (*data_dict*) 
-Once variables and depth range are defined, the data and their attributes are read iteratively for each platform, and saved into a dictionary *data_dict* which contains:
-* the actual data, loaded into an **xarray** for data handling, analysis and visualisation
-* the campaign's main attributes: platform code & name, data type, title, instrument, longitude & latitude, and vertical min & max)  
+Define Selected Variables and then the DEPTH range, noting that:
+* ***metadata[pc]['depth_m_v1']***: either this is equal to the lower bound (ie index=0)
+* ***metadata[pc]['depth_m_v2']***: or is equal to the upper bound (ie index=-1)
 
-An overview dataframe *overview_df* is then generated to show the detailed information about each campaign at sea: *platform code & name*, *data type*, *title*, *instrument*, *longitude* & *latitude*, and *vertical min & max*).
+Once variables and depth range are defined, the data and their attributes are read iteratively for each platform, and saved into a dictionary *data_dict*, similarily as described in the REF notebook. 
 
-#### Define DEPTH range for analysis
-The selected values of DEPTH are defined within the range *depth_start* - *common_depth_stop_abs*. 
-* *depth_start*: this is defined when the data vars are fetched. if it's 0, then depth_stop can either be to the last value of each platform (ie ALL data), or a set constant eg 10
-* *common_depth_stop_abs*: this is the absolute maximum value of depth, ie aligned with the actual measurements of depth   
+#### Define Filtered Data
+Define the filtered dataframe to use for the analysis (eg *position_df_bbox*, *position_df_bbox_mm*, *position_df_bbox_hh*) to the **df_toPlot** variable.
 
-#### Filter Data
-This section allows filtering one or more variables for each platform, with a desired DEPTH range, to the data that was previously filtered in the Filtered Position section (eg by "BBOX", by "BBOX and Month", or by "BBOX and Hour"). 
-
-The following are the two types of filters that are given as examples: 
-* Filtered data by BBOX and One Variable
-* Filtered data by BBOX (All Variables)
-
-The output of both filters is a *filtered_xarr* xarray dataset, containing one or all the variables within the specified DEPTH range.  
+#### Data Filtering
+This is the same as the *Data Filtering* section in the REF Notebook. 
 
 #### Reference Plots
-The reference plots are generated for the available **variables** of the **filtered** xarrays. On the y-axis is shown the TIME of the measurement (in float format, which needs to be converted to datetime format), and on the x-axis is the DEPTH of the measurement. 
+The reference plots are generated in the same way as decribed in the REF Notebook. 
+* Plots for Sea Water Temperature and Pressure respectively, between 0-20 meters for the selected locations of the platform GT.
+![image](./images/dap_0-20_individual.png)
+* Plots for Sea Water Temperature and Pressure respectively, between 0-20 meters, for the selected locations of the aggregated platforms.
+![image](./images/dap_0-20_aggregated.png)
 
-This notebook shows how to generate two types of plots:
-* Plotting individual Variables per individual Platform
-* Plotting individual Variables across aggregated Platforms
 
-The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Filtered Data section. The example plots below represent the Sea Water Temperature (TEMP) and Pressure (PRES) respectively, between 200 and 280 meters below sea level, for the platform AA.
-![image](./images/Plotting_Variables_per_individual_Platform.png)
+### Range 50-last Test
+This section follows the same structure as the DAP 0-20 range section, but focuses on data extracted from the 50 meters onwards of DEPTH.
 
-The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data for individual variable(s), across available platforms. To do so, the **Filtered data by BBOX (All Variables)** section must have been executed, so that the correct *filtered_arr* array is used. 
+* Plot for Sea Water Temperature and Pressure respectively, between 50-2956 meters for the selected locations of the platform GT.
+![image](./images/dap_50-last_individual.png)
 
-The example plots below represent the two variables TEMP and PRES aggregated among the available platforms, between 200 and 280 meters below sea level.
-![image](./images/Plotting_aggregate_results.png)
+* Plot for Sea Water Temperature and Pressure respectively, between 50-2956 meters for the aggregated platforms.
+![image](./images/dap_50-last_aggregated.png)
