@@ -6,18 +6,19 @@ The two notebooks are:
 * 1) **Test1 REF - OPeNDAP Xarray use cases**: a reference notebook for the download of a full data bulk, and ingesting it in a data structure in memory: this structure can be further filtered to extract data chunks, using Python functions, that are plotted for data visualisation;
 * 2) **Test1 DAP - OPeNDAP Xarray use cases**: a Data Access Protocol (DAP) notebook for experimenting OPeNDAP query filters, for the download of directly optimized data chunks: these data chunks are then plotted for data visualisation.
 
-Both the REF and DAP Notebooks follow the same structure: 
-* Exploratory Data Analysis
-* 
+Both the REF and DAP Notebooks follow the same approach: 
+* Set-up
+* Load and Plot of CTD Positions only (from DDS information)
+* Load and Plot all needed CTD Data (from Variables and Attributes)
+
+In each notebook, two case studies are described to visualise different data ranges: 
+* extraction of data between the first elements of DEPTH, eg 0-20;
+* extraction of data between the last elements of DEPTH, eg 50-last.
+
+Application developers are supported to compare the 2 ways to querying data (Bulk and Optimized) in order to learn how to exploit efficiently (and without mistake) all the OPeNDAP server-side capabilities for data filtering and rerieval.
 
 
-
-
-In each notebook, two case studies are shown to visualise data: 
-* extraction of data between the first 20 element of DEPTH (0-20)
-* extraction of data between the last elements of DEPTH, from the 50th element onwards (50-last)
-
-# 1) Test1 REF - Comparison
+# 1) **Test1 REF - OPeNDAP Xarray use cases**
 
 This Notebook provides an overview, as well as practical examples, to access and analyse a subset of NetCDF data from available campaigns collected in the year 2003. This subset of data has been prepared and uploaded on the Hyrax server (https://opendap.terradue.com/hyrax/data/subset_2003/), where it can be accessed directly.
 
@@ -87,23 +88,19 @@ The four variables that are available in this dataset are:
 Define the filtered dataframe to use for the analysis (eg *position_df_bbox*, *position_df_bbox_mm*, *position_df_bbox_hh*) to the **df_toPlot** variable.
 
 ### Range 0-20 Test
+Define parameters:
+* Platform Code
+* Selected Variables
+* DEPTH range
 
+#### Data Filtering
+This section allows filtering one or all variables for teh define platform and DEPTH range, to the previously-filtered data (eg by "BBOX", by "BBOX and Month", or by "BBOX and Hour").
 
-
-
-
-
-
-#### Filter Data
-This section allows filtering one or more variables for each platform, and DEPTH range, to the data that was previously filtered in the Filtered Position section.
-
-The following are the four types of filters that are given as examples: 
+The following are the two types of filters that are given as examples: 
 * Filtered data by BBOX and One Variable
 * Filtered data by BBOX (All Variables)
-* Filtered data by BBOX and One Variable, within a DEPTH range
-* Filtered data by BBOX (All Variables), within a DEPTH range
 
-The output of all filters is a *filtered_xarr* xarray dataset, containing one or all the variables within the specified DEPTH range, of those positions that have been previously filtered (eg by "BBOX", by "BBOX and Month", or by "BBOX and Hour"). 
+The output of both filters is a *filtered_xarr* xarray dataset, containing one or all the variables within the specified DEPTH range.
 
 #### Reference Plots
 The reference plots are generated for the available variables of the filtered xarrays. On the y-axis is shown the TIME of the measurement (in float format, which needs to be converted to datetime format), and on the x-axis is the DEPTH of the measurement. 
@@ -112,18 +109,28 @@ This notebook shows how to generate two types of plots:
 * Plotting individual Variables per individual Platform
 * Plotting individual Variables across aggregated Platforms
 
-The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Filtered Data section. The example plot below represents the Sea Water Practical Salinity (PSAL) between 50 and 100 meters below sea level, for the platform GT.
-![image](./images/GT_PSAL.png)
+The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Data Filtering section. The example plots below represent the Sea Water Temperature and Pressure between 0-20 meters for the selected locations of the platform GT.
+![image](./images/ref_0-20_individual.png)
 
-The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data for a specific variable, across all platforms. To do so, the dimensions of the DEPTH of the variables of all platforms must be the equal, otherwise it is not possible to combine them into a new, aggregated, xarray. Two options are provided to accomplish this:
-* Aggregate with minimum DEPTH, i.e. use minimum common DEPTH across all platforms' DEPTHs
-* Aggregate with maximum DEPTH, i.e. use maximum DEPTH across all platforms' DEPTHs, and fill empty values with nans
+The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data across all platforms, for a specific variable. To do so, the dimensions of the DEPTH of the variables of all platforms must be equal, otherwise it is not possible to combine them into a new, aggregated, xarray. Two options are provided to accomplish this:
+* Aggregate with minimum DEPTH elements, i.e. use minimum common DEPTH across all platforms' DEPTHs
+* Aggregate with maximum DEPTH elements, i.e. use maximum DEPTH across all platforms' DEPTHs, and fill empty values with nans
 
 The example plots below represent the four variables aggregated among the available platforms, between 0 and 100 meters below sea level.
-![image](./images/aggregated_platforms.png)
+![image](./images/ref_0-20_aggregated.png)
+
+### Range 50-last Test
+This section follows the same structure as the 0-20 range section, but focuses on data extracted from the 50 meters onwards of DEPTH.
+
+Plot for Sea Water Temperature and Pressure between 50-2956 meters for the selected locations of the platform GT.
+![image](./images/ref_50-last_individual.png)
+
+Plot for Sea Water Temperature and Pressure between 50-2956 meters for the aggregated platforms.
+![image](./images/ref_50-last_aggregated.png)
 
 
-## 2) DAP Notebook - Extraction with Queries 
+
+## 2) **Test1 DAP - OPeNDAP Xarray use cases** 
 This Notebook provides a practical example to access and analyse **only a selection** of a NetCDF dataset that was presented in section *1) Reference Notebook - Subset 2003 Analysis with Xarray*, to minimixe data volume requirements.
 
 ### Set-up
