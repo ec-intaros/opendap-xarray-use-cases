@@ -1,15 +1,29 @@
 # Notebooks for analysing NetCDF data 
 
-In this repository there are two notebooks for accessing, querying, analysing and visualising NetCDF data. The notebooks are explained in this document as separate sections. 
+In this repository there are two notebooks for accessing, querying, analysing and visualising NetCDF data. The notebooks are explained in this document as separate sections, and can be executed in parallel. 
 
-* 1) **Reference Notebook - Subset 2003 Analysis with Xarray**: practical examples to access and analyse ALL data of a subset of NetCDF files. 
-* 2) **DAP Notebook - Extraction with Queries**: practical examples to access and analyse only a selection of data of a subset of NetCDF files.
+The two notebooks are:
+* 1) **Test1 REF - OPeNDAP Xarray use cases**: a reference notebook for the download of a full data bulk, and ingesting it in a data structure in memory: this structure can be further filtered to extract data chunks, using Python functions, that are plotted for data visualisation;
+* 2) **Test1 DAP - OPeNDAP Xarray use cases**: a Data Access Protocol (DAP) notebook for experimenting OPeNDAP query filters, for the download of directly optimized data chunks: these data chunks are then plotted for data visualisation.
 
-## 1) Reference Notebook - Subset 2003 Analysis with Xarray
+Both the REF and DAP Notebooks follow the same structure: 
+* Exploratory Data Analysis
+* 
+
+
+
+
+In each notebook, two case studies are shown to visualise data: 
+* extraction of data between the first 20 element of DEPTH (0-20)
+* extraction of data between the last elements of DEPTH, from the 50th element onwards (50-last)
+
+# 1) Test1 REF - Comparison
 
 This Notebook provides an overview, as well as practical examples, to access and analyse a subset of NetCDF data from available campaigns collected in the year 2003. This subset of data has been prepared and uploaded on the Hyrax server (https://opendap.terradue.com/hyrax/data/subset_2003/), where it can be accessed directly.
 
 The main steps for executing the Notebook are described below. 
+
+## Exploratory Data Analysis
 
 ### Set-up
 The first step is to define the url of the server to use. Two options are provided, one for HYRAX and one for THREDDS:
@@ -36,12 +50,12 @@ A position dataframe is then generated per each platform, to match and combine t
 Merged dataframe with all platforms. Total of 3209 measurement locations.
 ![image](./images/position_df_table.png)
 
-#### Plot Positions 
+#### Plot all Positions 
 The positions of all measurements of the given platforms are visualised in different colours on an interactive plot. By hoovering on the coloured dots, information such as index, x&y, and platform can be easily retrieved and visualised. 
 
 ![image](./images/interactive_position_plot.png)
 
-#### Filter Positions
+### Filter Positions
 This section shows a few examples of data filtering by using the 'LATITUDE', 'LONGITUDE' and 'TIME' dimensions. The following filters are included:
 
 * By bounding box (BBOX)
@@ -49,21 +63,36 @@ This section shows a few examples of data filtering by using the 'LATITUDE', 'LO
 * By BBOX and Time (eg hour) of collection
 * By customised time range
 
-### Processing: Load and Plot all needed Data (Variables and their Attributes)
+## Data Processing: Load and Plot all Data (Variables and their Attributes)
 This section goes deeper into the data analysis by accessing all data (variables and their attributes). This is therefore more computationally-demanding, especially if multiple datasets of many measurements are analysed at once. 
+
+### Fetch Data 
 
 #### Create Data Dictionary (*data_dict*) 
 All data (variables and their attributes) for each platform are read iteratively, and saved into a dictionary *data_dict* which contains:
 * the actual data, loaded into an xarray for data handling, analysis and visualisation
 * the campaign's main attributes: *platform code & name*, *data type*, *title*, *instrument*, *longitude* & *latitude*, and *vertical min & max*)
 
+#### Dataframe with overview of Platforms' attributes  
 An overview dataframe *overview_df* is then generated to show the detailed information about each campaign at sea: *platform code & name*, *data type*, *title*, *instrument*, *longitude* & *latitude*, and *vertical min & max*).
 
-The variables that are available for each platform are extracted and printed out, to allow the user to select only those variables of interest for the detailed analysis. In this case, the four variables of interest in this dataset are: 
+#### Define Variables
+The four variables that are available in this dataset are: 
 * **PRES**: Sea Water Pressure
 * **TEMP**: Sea Water Temperature
 * **PSAL**: Sea Water Practical Salinity
 * **CNDC**: Sea Water Electrical Conductivity
+
+#### Define Filtered Data
+Define the filtered dataframe to use for the analysis (eg *position_df_bbox*, *position_df_bbox_mm*, *position_df_bbox_hh*) to the **df_toPlot** variable.
+
+### Range 0-20 Test
+
+
+
+
+
+
 
 #### Filter Data
 This section allows filtering one or more variables for each platform, and DEPTH range, to the data that was previously filtered in the Filtered Position section.
