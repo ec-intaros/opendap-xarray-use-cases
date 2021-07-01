@@ -15,7 +15,7 @@ In each notebook, two case studies are described to visualise different data ran
 * extraction of data between the first elements of DEPTH, eg **0-20**;
 * extraction of data between the last elements of DEPTH, eg **50-last**.
 
-Application developers are supported to compare the two ways to querying data (Bulk and Optimized) in order to learn how to exploit efficiently (and without mistake) all the OPeNDAP server-side capabilities for data filtering and rerieval.
+Application developers are supported to compare the two ways to querying data (Bulk and Optimized) in order to learn how to exploit efficiently (and without mistake) all the OPeNDAP server-side capabilities for data filtering and retrieval.
 
 
 # 1) **Test1 REF - OPeNDAP Xarray use cases**
