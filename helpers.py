@@ -41,7 +41,7 @@ def getQueryString(mydict, keylist):
 #     print('Query string:', que_str)
     return que_str
 
-
+# Function to fetch data using xarray.open_dataset and save attributes
 def fetch_data(url):
     remote_data = xr.open_dataset(
         url,
@@ -67,7 +67,26 @@ def fetch_data(url):
     
     return remote_data, data_attr
 
+# Function to save Attributes to a database
+def getAttributes(my_df, my_dict):
+    
+    for key in my_dict.keys():
 
+        my_df.loc[key,'Platform_code'] = [my_dict[key]['data_attr'][0].astype(str)]
+        my_df.loc[key,'Platform_name'] = [my_dict[key]['data_attr'][1].astype(str)]
+        my_df.loc[key,'Year'] = [my_dict[key]['data_attr'][2].astype(int)]
+        my_df.loc[key,'Data_type'] = [my_dict[key]['data_attr'][3].astype(str)]
+        my_df.loc[key,'Title'] = [my_dict[key]['data_attr'][4].astype(str)]
+        my_df.loc[key,'Instrument'] = [my_dict[key]['data_attr'][5].astype(str)]
+        my_df.loc[key,'Vertical_min'] = [my_dict[key]['data_attr'][6].astype(float)]
+        my_df.loc[key,'Vertical_max'] = [my_dict[key]['data_attr'][7].astype(float)]
+        my_df.loc[key,'Lon_min'] = [my_dict[key]['data_attr'][8].astype(float)]
+        my_df.loc[key,'Lon_max'] = [my_dict[key]['data_attr'][9].astype(float)]
+        my_df.loc[key,'Lat_min'] = [my_dict[key]['data_attr'][10].astype(float)]
+        my_df.loc[key,'Lat_max'] = [my_dict[key]['data_attr'][11].astype(float)]
+
+    return my_df    
+    
 # Function to filter XARRAY based on platform, Var and DEPTH
 def filter_xarr(df_toPlot, data_dict, platform, var, depth_range):
     
@@ -185,23 +204,3 @@ def getQuery(pc, start, stop):
 # queries_all
 
 
-# Function to save Attributes to a database
-def getAttributes(my_df, my_dict):
-    
-    for key in my_dict.keys():
-
-        my_df.loc[key,'Platform_code'] = [my_dict[key]['data_attr'][0].astype(str)]
-        my_df.loc[key,'Platform_name'] = [my_dict[key]['data_attr'][1].astype(str)]
-        my_df.loc[key,'Year'] = [my_dict[key]['data_attr'][2].astype(int)]
-        my_df.loc[key,'Data_type'] = [my_dict[key]['data_attr'][3].astype(str)]
-        my_df.loc[key,'Title'] = [my_dict[key]['data_attr'][4].astype(str)]
-        my_df.loc[key,'Instrument'] = [my_dict[key]['data_attr'][5].astype(str)]
-        my_df.loc[key,'Vertical_min'] = [my_dict[key]['data_attr'][6].astype(float)]
-        my_df.loc[key,'Vertical_max'] = [my_dict[key]['data_attr'][7].astype(float)]
-        my_df.loc[key,'Lon_min'] = [my_dict[key]['data_attr'][8].astype(float)]
-        my_df.loc[key,'Lon_max'] = [my_dict[key]['data_attr'][9].astype(float)]
-        my_df.loc[key,'Lat_min'] = [my_dict[key]['data_attr'][10].astype(float)]
-        my_df.loc[key,'Lat_max'] = [my_dict[key]['data_attr'][11].astype(float)]
-
-    return my_df    
-    
