@@ -172,7 +172,6 @@ The reference plots are generated in the same way as decribed in the REF Noteboo
 * Plots for Sea Water Temperature and Pressure respectively, between 0-20 meters, for the selected locations of the aggregated platforms.
 ![image](./images/dap_0-20_aggregated.png)
 
-
 ### Range 50-last Test
 This section follows the same structure and analysis as the DAP 0-20 range section, but focuses on data extracted from the 50 meters onwards of DEPTH.
 
