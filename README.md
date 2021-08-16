@@ -1,19 +1,21 @@
 # Notebooks for analysing NetCDF data 
 
-In this repository there are two notebooks for accessing, querying, analysing and visualising NetCDF data. A subset of NetCDF data has been chosen from available CTD data acquisition campaigns collected in the year 2003. This subset of data has been prepared and uploaded on the Hyrax server (https://opendap.terradue.com/hyrax/data/subset_2003/), where it can be accessed directly. 
+In this repository there are two Notebooks for accessing, querying, analysing and visualising NetCDF data, accessible online from OPeNDAP servers, with the specific purpose to help application developers to refine and validate optimised OPeNDAP queries. 
+For the provided code examples in the Notebooks, a subset of NetCDF data has been chosen from available CTD data acquisition campaigns collected in the year 2003 (cf. descriptions from the [INTAROS Catalogue](https://catalog-intaros.nersc.no/organization/institute-of-marine-research-imr)). This data subset has been prepared and uploaded on both the OPeNDAP Hyrax and the OPeNDAP TDS servers hosted on the iAOS Cloud Platform’s Data Agency (see section "Set-up" below), from where it can be accessed online by authorised developer users. This type of developer support operation can be adapted to any registered developer needs, and garantees a stable work environment for the duration of an application tests. 
+Once a query strategy is validated by the developer, operational OPeNDAP servers can then be configured by the developer, and the optimised Notebook code can be integrated into a target application for efficient data filtering and retrieval across a network connection.
 
-The two notebooks are explained in this document as separate sections, and can be executed in parallel. 
+The two Notebooks are presented in this document as separate sections, and can be executed in parallel to refine and validate optimised OPeNDAP queries. 
 
-The two notebooks are:
-1) **Test1 REF - OPeNDAP Xarray use cases**: a reference notebook for the download of full data files (data bulks as they are encoded server side), and storing their content in memory for processing: the bulk data structure can be further filtered to extract data chunks related to an analysis goal, using Python functions, and with plotting for data visualisation;
-2) **Test1 DAP - OPeNDAP Xarray use cases**: a Data Access Protocol (DAP) Notebook for the validation of OPeNDAP query filters, in order to download optimized data chunks related to an analysis goal. These data chunks are then plotted for data visualisation.
+The two Notebooks are:
+1) **Test1 REF - OPeNDAP Xarray use cases**: a reference notebook for the download of full data files (data bulks as they are encoded server side), and storing their content in memory for processing: the bulk data structure can be further filtered to extract data chunks related to an analysis goal (build a reference view from the original data), using Python functions, and with plotting for data visualisation;
+2) **Test1 DAP - OPeNDAP Xarray use cases**: a Data Access Protocol (DAP) Notebook for the validation of OPeNDAP query filters, in order to download optimized data chunks related to an analysis goal. These optimised downloads can be validated against a reference view created within the REF Notebook. These data chunks are also plotted for data visualisation.
 
 Both the REF and DAP Notebooks follow the same approach: 
 * Set-up of the Server URL, Year and Platform Codes
-* Load and Plot of CTD Positions only (from DDS information)
+* Load and Plot of CTD Positions only (from DDS information, the OPeNDAP Data Description Structure)
 * Load and Plot all needed CTD Data (from Variables and Attributes)
 
-In each notebook, two examples of data filtering queries are pre-defined, describing how to visualise different data ranges: 
+In each Notebook, two examples of data filtering queries are pre-defined, describing how to visualise different data ranges: 
 * extraction of data between the first elements of DEPTH, eg **0-20**;
 * extraction of data between the last elements of DEPTH, eg **50-last**.
 
@@ -28,11 +30,11 @@ The main steps for executing the Notebook are described below.
 ## Exploratory Data Analysis
 
 ### Set-up
-The first step is to specify the data source available on the iAOS Cloud Platform’s Data Agency. Two options are provided, one for HYRAX and one for THREDDS:
+The first step is to specify the data source available on the iAOS Cloud Platform’s Data Agency. Two options are provided, one for HYRAX and one for THREDDS DATA SERVER:
 * hyrax: https://opendap.terradue.com/hyrax/data/subset_2003/
 * thredds: https://opendap.terradue.com/thredds/dodsC/subset_2003/
 
-Subsequently, the *year* and the *platform codes* are defined. This information is needed, and needs to be known a priori, as it allows comleting the url to access each specific NetCDF file. The naming convention of the NetCDF files is:
+Subsequently, the *year* and the *platform codes* are defined. This information is needed, and has to be known a priori, as it allows completing the url to access each specific NetCDF file. The naming convention of the NetCDF files is:
 ```58<platform_code>_CTD_<year>.nc.nc4```. For example, for the platform 'GT' and year 2003, the name of the NetCDF file is: ```58GT_CTD_2003.nc.nc4.```. 
 
 ### Retrieval of DDS information
@@ -103,14 +105,14 @@ The output of both filters is a *filtered_xarr* xarray dataset, containing one o
 #### Reference Plots
 The reference plots are generated for the available variables of the filtered xarrays. On the y-axis is shown the TIME of the measurement (in float format, which needs to be converted to datetime format), and on the x-axis is the DEPTH of the measurement.
 
-This notebook shows how to generate two types of plots:
+This Notebook shows how to generate two types of plots:
 * Plotting individual Variables per individual Platform
 * Plotting individual Variables across aggregated Platforms
 
-The first plot is more straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Data Filtering section. The example plots below represent the Sea Water Temperature and Pressure between 0-20 meters for the selected locations of the platform GT.
+The first plot is straightforward, as it automatically generates plot(s) of the variable(s) that has(have) been generated in the Data Filtering section. The example plots below represent the Sea Water Temperature and Pressure between 0-20 meters for the selected locations of the platform GT.
 ![image](./images/ref_0-20_individual.png)
 
-The second plot is more complex, as it needs an additional operation before executing. This consists on generating and then aggregating all data across all platforms, for a specific variable. To do so, the dimensions of the DEPTH of the variables of all platforms must be equal, otherwise it is not possible to combine them into a new, aggregated, xarray. Two options are provided to accomplish this:
+The second plot is more complex, as it needs an additional operation before executing. This consists in generating and then aggregating all data across all platforms, for a specific variable. To do so, the dimensions of the DEPTH of the variables of all platforms must be equal, otherwise it is not possible to combine them into a new, aggregated, xarray. Two options are provided to accomplish this:
 * Aggregate with minimum DEPTH elements, i.e. use minimum common DEPTH across all platforms' DEPTHs
 * Aggregate with maximum DEPTH elements, i.e. use maximum DEPTH across all platforms' DEPTHs, and fill empty values with nans
 
@@ -127,9 +129,9 @@ This section follows the same structure as the 0-20 range section, but focuses o
 
 
 # 2) **Test1 DAP - OPeNDAP Xarray use cases** 
-This Notebook provides an overview, as well as practical examples, for online access and analysis of NetCDF data files holding CTD data acquisition. It loads server-side filtered data structures in memory into optimized Python xarray structures and performs the plotting of the retrieved variables. 
+This Notebook provides an overview, as well as practical examples, for online access and analysis of NetCDF data files holding CTD data acquisition. It loads server-side filtered data structures in memory, into optimized Python xarray structures, and performs the plotting of the retrieved variables. 
 
-The first steps are to specify the data source (hyrax or thredds) available on the iAOS Cloud Platform’s Data Agency, and perform the retrieval of the DDS information (following the same approach described in the REF notebook).
+The first steps are to specify the CTD data source with the same target as done in the REF Notebook, for example the HYRAX server or the THREDDS DATA SERVER available on the iAOS Cloud Platform’s Data Agency, or else directly an operational OPeNDAP server, and perform the retrieval of the DDS information (following the same approach described in the REF notebook).
 
 ## Exploratory Data Analysis
 This is the same as the *Exploratory Data Analysis* section in the REF Notebook. 
@@ -143,10 +145,10 @@ The selected variables of interest need to be specified in the *var_list*. The f
 * **PSAL**: Sea Water Practical Salinity
 * **CNDC**: Sea Water Electrical Conductivity 
 
-The DEPTH range must also be defined in this case, as data is fetched with the specific DEPTH range directly from URL. For some limitations to the DAP syntax, at least one range boundary needs to correspond to one of the two extremes. For example, in a data array of 100 elements starting from 0 to 99, the following scenarios are possible:
+The DEPTH range must also be defined in this case, as data is fetched with the specific DEPTH range directly from URL. Due to some limitations of the DAP syntax, at least one range boundary needs to correspond to one of the two extremes. For example, in a data array of 100 elements starting from 0 to 99, the following scenarios are possible:
 * select the first 20 elements, corresponding to the values range 0 - 19 --> ```[first:1:intermediate] (eg [0:1:19])``` work
-* select the last 20 elements, corresponsing to the values range 80 - 99 --> ```[intermediate:1:last] (eg [80:1:99])``` work
-* select the intermediate 60-80 elements, corresponsing to the values range 60 - 79 --> ```[intermediate_1:1:intermediate_2] (eg [60:1:79])``` does NOT work
+* select the last 20 elements, corresponding to the values range 80 - 99 --> ```[intermediate:1:last] (eg [80:1:99])``` work
+* select the intermediate 60-80 elements, corresponding to the values range 60 - 79 --> ```[intermediate_1:1:intermediate_2] (eg [60:1:79])``` does NOT work
 
 ### Range 0-20 Test
 
